@@ -16,11 +16,11 @@ https://w3c.github.io/webcomponents-cg/#cross-root-aria
 ## Description
 
 1. Shadow root encapsulation currently prevents references between elements in different roots. Cross-root ARIA references would re-enable this platform feature within shadow roots.
-2. It's not possible to "forward" ARIA attributes from a custom element host into elements in the host's shadow root. For instance, a custom input that wants to allow users to customize the ARIA role, has no way to forward the role attribute to the encapsulated native input.
+2. It's not possible to "reflect" ARIA attributes from am element in a shadow root up to the host of that shadow root. For instance, the DOM for a listbox fully encapsulated in a shadow root cannot be reflected into the parent DOM tree as would be needed for it to be referenced by the `aria-controls` attribute on an `<input>` element. Similarly, the list item descendent could not reflect its content for reference by an `aria-activedescendent` attribute on the same `<input>` element. These DOM elements are rightfully encapsulated within their shadow root, but a system of aria reflection could map their content (sans element reference) to their host, and the host could pass that content when referenced by `aria-controls` or `aria-activedescendent`.
 
 ## Motivation
 
-Content on the web be accessible is critically important. Making web component content accessible currently requires many complicated and only partially-successful workarounds, such as:
+Content on the web being accessible is critically important. Making web component content accessible currently requires many complicated and only partially-successful workarounds, such as:
 
 * Observing and moving ARIA-related attributes across elements (for role, etc.)
 * Using non-standard attributes for ARIA features, in order to apply them to elements in a shadow root.
@@ -30,4 +30,4 @@ Content on the web be accessible is critically important. Making web component c
 
 ## Explainers
 
-- [Cross-root ARIA Delegation API](cross-root-aria-delegation.md)
+- [Cross-root ARIA Reflection API](cross-root-aria-reflection.md)
