@@ -116,6 +116,400 @@ Or even further by accepting a token list on `reflects` or a similarly shaped at
 </x-foo>
 ```
 
+## Examples
+
+### Unlocking the Combobox
+
+Take this simplified ["Editable Combobox With List Autocomplete Example"](https://www.w3.org/WAI/ARIA/apg/example-index/combobox/combobox-autocomplete-list.html) from the ARIA Authoring Practices Guide.
+
+```html
+<label for="cb1-input">State</label>
+<div class="combobox combobox-list">
+    <div class="group">
+        <input
+            id="cb1-input"
+            class="cb_edit"
+            type="text"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded="true"
+            aria-controls="cb1-listbox"
+            aria-activedescendant="lb1-ak"
+        />
+        <button
+            id="cb1-button"
+            tabindex="-1"
+            aria-label="States"
+            aria-expanded="true"
+            aria-controls="cb1-listbox"
+        ></button>
+    </div>
+    <ul id="cb1-listbox" role="listbox" aria-label="States">
+        <li id="lb1-al" role="option">Alabama</li>
+        <li id="lb1-ak" role="option">Alaska</li>
+    </ul>
+</div>
+```
+
+Currently, to fully achieve the relationships outlined therein, if you wanted to convert
+this DOM to custom elements, you'd really only have the option to decorate the example:
+
+```html
+<x-label>
+    <label for="cb1-input">State</label>
+</x-label>
+<x-combobox>
+    <x-input-group>
+        <x-input>
+            <input
+                id="cb1-input"
+                class="cb_edit"
+                type="text"
+                role="combobox"
+                aria-autocomplete="list"
+                aria-expanded="true"
+                aria-controls="cb1-listbox"
+                aria-activedescendant="lb1-ak"
+            />
+        </x-input>
+        <x-button>
+            <button
+                id="cb1-button"
+                tabindex="-1"
+                aria-label="States"
+                aria-expanded="true"
+                aria-controls="cb1-listbox"
+            ></button>
+        </x-button>
+    </x-input-group>
+    <x-listbox>
+        <ul id="cb1-listbox" role="listbox" aria-label="States">
+            <li id="lb1-al" role="option">Alabama</li>
+            <li id="lb1-ak" role="option">Alaska</li>
+        </ul>
+    </x-listbox>
+</x-combobox>
+```
+
+While this offers some additional custom element-based control over the styles attributed to this
+UI, the approach continues to hoist the responsibility of building this DOM to the parent component or
+application.
+
+When moving that DOM management responsibility to the individual custom elements
+themselves, the responsibility of the consuming developer begins to diminish, but the ID based
+relationships begin to change or become impossible. To suppor this, we've assumed the presence of
+the ARIA Attribute Delegation API in following code examples:
+
+```html
+<x-label id="cb1-label">State</x-label>
+<x-combobox>
+    <x-input-group>
+        <x-input
+            aria-labeledby="cb1-label"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded="true"
+            aria-controls="cb1-listbox"
+            aria-activedescendant="lb1-ak"
+        >
+            #shadow-root delegates="aria-labeledby role aria-autocomplete aria-expanded aria-controls aria-activedescendant"
+                <input
+                    type="text"
+                    auto-role
+                    auto-aria-labeledby
+                    auto-aria-autocomplete
+                    auto-aria-expanded
+                    auto-aria-controls
+                    auto-aria-activedescendant
+                />
+        </x-input>
+        <x-button
+            aria-labeledby="cb1-label"
+            tabindex="-1"
+            aria-expanded="true"
+            aria-controls="cb1-listbox"
+        ></x-button>
+    </x-input-group>
+    <x-listbox
+        aria-labeledby="cb1-label"
+        options='[["Alabama", "lb1-al"], ["Alaska", "lb1-ak"]]'
+    ></x-listbox>
+</x-combobox>
+```
+
+Here we've moved from the `for` attribute on a `<label>` element to giving its host an ID so that
+other elements can reference it via `aria-labelledby`. This persists the accessible relationship, 
+but it removes the previously managed interactions, like clicking the `<label>` focusing on the
+input. We also see the `aria-activedescendant` relationship broken as the ID `lb1-ak` moves into 
+the shadow root of the `<x-listbox>` element. This is the first place the ARIA Attribute Reflection 
+benefits the refactor of the pattern from raw DOM to custom elements.
+
+```html
+<x-label id="cb1-label">State</x-label>
+<x-combobox>
+    <x-input-group>
+        <x-input
+            aria-labeledby="cb1-label"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded="true"
+            aria-controls="cb1-listbox"
+            aria-activedescendant="lb1-ak"
+        >
+            #shadow-root delegates="aria-labeledby role aria-autocomplete aria-expanded aria-controls aria-activedescendant"
+                <input
+                    type="text"
+                    auto-role
+                    auto-aria-labeledby
+                    auto-aria-autocomplete
+                    auto-aria-expanded
+                    auto-aria-controls
+                    auto-aria-activedescendant
+                />
+        </x-input>
+        <x-button
+            aria-labeledby="cb1-label"
+            tabindex="-1"
+            aria-expanded="true"
+            aria-controls="cb1-listbox"
+        >
+            #shadow-root reflects="role"
+                <button reflect-role></button>
+        </x-button>
+    </x-input-group>
+    <x-listbox
+        aria-labeledby="cb1-label"
+        id="cb1-listbox"
+        options='["Alabama", "Alaska"]'
+    >
+        #shadow-root delegates="label" reflects="aria-activedescendant role"
+            <ul role="listbox" reflect-role autolabel>
+                <li role="option">Alabama</li>
+                <li role="option" reflect-aria-activedescendant>Alaska</li>
+            </ul>
+    </x-listbox>
+</x-combobox>
+```
+
+As we begin to see the benefits and capabilities that the Delegation and Reflection APIs open for 
+out custom element architectures, this example can be further simplified.
+
+```html
+<x-label for="cb1">
+    #shadow-root delegates="for"
+        <label autofor><slot></slot></label>
+    State
+</x-label>
+<x-combobox
+    id="cb1"
+    options='["Alabama", "Alaska"]'
+>
+    #shadow-root delegates="focus label"
+        <x-input
+            aria-labeledby="cb1-label"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded="true"
+            aria-controls="listbox"
+            aria-activedescendant="listbox"
+        >
+            #shadow-root delegates="aria-labeledby role aria-autocomplete aria-expanded aria-controls aria-activedescendant"
+                <input
+                    type="text"
+                    auto-role
+                    auto-aria-labeledby
+                    auto-aria-autocomplete
+                    auto-aria-expanded
+                    auto-aria-controls
+                    auto-aria-activedescendant
+                />
+        </x-input>
+        <x-button
+            autolabel
+            tabindex="-1"
+            aria-expanded="true"
+            aria-controls="listbox"
+        >
+            #shadow-root reflects="role"
+                <button reflect-role></button>
+        </x-button>
+        <x-listbox
+            autolabel
+            id="listbox"
+            options=options
+        >
+            #shadow-root delegates="label" reflects="aria-activedescendant role"
+                <ul role="listbox" reflect-role autolabel>
+                    <li role="option">Alabama</li>
+                    <li role="option" reflect-aria-activedescendant>Alaska</li>
+                </ul>
+        </x-listbox>
+</x-combobox>
+```
+
+In the above example, the move to leveraging a shadow root on `<x-combobox>` even opened the one 
+to many relationship of the `autolabel` delegation allowing for the return to the `for` attribute, 
+which is delegated to an actual `<label>` element to surface the interaction relationships we had 
+previously lost with the move to `aria-labelledby`. All the while, we've reduced the DOM that a 
+consumer of this pattern is required to write to:
+
+```html 
+<x-label for="cb1">State</x-label>
+<x-combobox
+    id="cb1"
+    options='["Alabama", "Alaska"]'
+></x-combobox>
+```
+
+This feels like a really nice refactor. All of these changes are powered by highly useful API in 
+the form of ARIA Attribute Delegation and ARIA Attribute Reflection and were previously not possible 
+when placing shadow boundaries between important content in an interface. However, it does assume 
+a greenfield implementation. A more realistic look at what these APIs can surface will be 
+derived from decorating or composing existing patterns into these complex interfaces.
+
+Take this interpretation of a popular custom elements library's "input" and "list" components:
+
+```html 
+<y-textfield
+    label="State"
+>
+    #shadow-root
+        <label>
+            ${label}
+            <input />
+        </label>
+</y-textfield>
+<y-button></y-button>
+<y-list>
+    <y-list-item>Alabama</y-list-item>
+    <y-list-item>Alaska</y-list-item>
+</y-list>
+```
+
+Let's see how we might be able to update this example with the ARIA Delegation and Reflection 
+APIs in order to complete the Combobox contract for screen readers.
+
+```html 
+<y-textfield
+    label="State"
+    id="cb2-textfield"
+    role="combobox"
+    aria-autocomplete="list"
+    aria-expanded="true"
+    aria-controls="cb2-listbox"
+    aria-activedescendant="lb2-ak"
+>
+    #shadow-root delegates="role aria-autocomplete aria-expanded aria-controls aria-activedescendant" reflects="label"
+        <label reflects-label>
+            ${label}
+            <input
+                auto-role
+                auto-aria-labeledby
+                auto-aria-autocomplete
+                auto-aria-expanded
+                auto-aria-controls
+                auto-aria-activedescendant
+            />
+        </label>
+</y-textfield>
+<y-button
+    aria-labelledby="cb2-textfield"
+    aria-expanded="true"
+    aria-controls="cb2-listbox"
+    icon="expand_more"
+>
+    #shadow-root delegates="label aria-expanded aria-controls"
+        <button auto-label auto-aria-expanded auto-aria-controls>
+            <y-icon>expand_more</y-icon>
+        </button>
+</y-button>
+<y-list
+    aria-labelledby="cb2-textfield"
+    id="cb2-listbox"
+>
+    <y-list-item id="lb2-al">Alabama</y-list-item>
+    <y-list-item id="lb2-ak">Alaska</y-list-item>
+</y-list>
+```
+
+This places a pretty high burden on consumers:
+
+```html 
+<y-textfield
+    label="State"
+    id="cb2-textfield"
+    role="combobox"
+    aria-autocomplete="list"
+    aria-expanded="true"
+    aria-controls="cb2-listbox"
+    aria-activedescendant="lb2-ak"
+></y-textfield>
+<y-button
+    aria-labelledby="cb2-textfield"
+    aria-expanded="true"
+    aria-controls="cb2-listbox"
+    icon="expand_more"
+></y-button>
+<y-list
+    aria-labelledby="cb2-textfield"
+    id="cb2-listbox"
+>
+    <y-list-item id="lb2-al">Alabama</y-list-item>
+    <y-list-item id="lb2-ak">Alaska</y-list-item>
+</y-list>
+```
+
+However, it could be easily composed into a single shadow root:
+
+```html 
+<y-combobox
+    label="state"
+    aria-activedescendant="lb2-ak"
+>
+    #shadow-root delegates="aria-activedescendant"
+        <y-textfield
+            label=label
+            id="cb2-textfield"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded="true"
+            aria-controls="cb2-listbox"
+            auto-aria-activedescendant
+        ></y-textfield>
+        <y-button
+            aria-labelledby="cb2-textfield"
+            aria-expanded="true"
+            aria-controls="cb2-listbox"
+            icon="expand_more"
+        ></y-button>
+        <y-list
+            aria-labelledby="cb2-textfield"
+            id="cb2-listbox"
+        >
+            <slot name="items"></slot>
+        </y-list>
+    <y-list-item id="lb2-al" slot="items">Alabama</y-list-item>
+    <y-list-item id="lb2-ak" slot="items">Alaska</y-list-item>
+</y-combobox>
+```
+
+This comes out to the following for a consuming developer:
+
+```html 
+<y-combobox
+    label="state"
+>
+    <y-list-item id="lb2-al" slot="items">Alabama</y-list-item>
+    <y-list-item id="lb2-ak" slot="items">Alaska</y-list-item>
+</y-combobox>
+```
+
+Even less if you choose to encapsulate DOM management for the list items by accepting an array of 
+items the way our `<x-combobox>` did above. However, in both cases the ARIA Attribute Delegation 
+and Reflection APIs are making it possible for more complex interfaces to be accessible when built 
+with custom element and shadow DOM without needing to architect your whole implementation around 
+the intricacies of keeping ID references in a single DOM tree.
+
 * * *
 
 # Appendix
