@@ -510,6 +510,53 @@ and Reflection APIs are making it possible for more complex interfaces to be acc
 with custom element and shadow DOM without needing to architect your whole implementation around 
 the intricacies of keeping ID references in a single DOM tree.
 
+### Other patterns
+
+There are many patterns where the presence of a shadow boundary will prevent otherwise default
+relationships between DOM element. Another that this API could directly benefit is a button group 
+that manages selection on those buttons similar to what we see in a collection of radio buttons (one 
+selected button) or checkboxes (multiple selected buttons). 
+
+Generally, this contract is made by having a `role="radiogroup"` or `role="group"` parent gather a 
+collection of `role="radio"` or `role="checkbox"` elements, respectively. In this case the native 
+semantics and focusability of a `<button>` element can do a lot of the heavy lifting, but if you do 
+do inside of a shadow boundary you run into some problems:
+
+```html 
+<z-button-group role="radiogroup">
+    <z-button>
+        #shadow-root
+            <button role="radio"><slot></slot></button>
+        Option 1
+    </z-button>
+    <z-button>
+        #shadow-root
+            <button role="radio"><slot></slot></button>
+        Option 2
+    </z-button>
+</z-button-group>
+```
+
+Here the `role="radio"` elements do not share a DOM tree with the `role="radiogroup"` elements which 
+breaks the contract requried to build the correct accessibility tree and pass it on to screen 
+readers. Here is another useful place for us to reflect aria attribtues from the shadow DOM into 
+the parent DOM tree:
+
+```html 
+<z-button-group role="radiogroup">
+    <z-button>
+        #shadow-root delegates="focus" reflects="role"
+            <button role="radio" reflect-role><slot></slot></button>
+        Option 1
+    </z-button>
+    <z-button>
+        #shadow-root delegates="focus" reflects="role"
+            <button role="radio" reflect-role><slot></slot></button>
+        Option 2
+    </z-button>
+</z-button-group>
+```
+
 * * *
 
 # Appendix
