@@ -140,6 +140,37 @@ The reflection API might also not resolve attributions from multiple shadow root
 
 The attributes names such as `shadowrootreflectss*` are very long and some consideration for shorter names by removing the `shadowroot` prefix can be discussed as long the discussion is sync'ed with the stakeholders of the respective Declarative Shadow DOM proposal. This can be further shortened by taking the `reflects` collection as a DOM token list on a single attribue.
 
+## OpenUICG Popup API
+
+The OpenUICG is developing an API to support content that popsup over a page. In thier example of 
+[using the new attributes in shadow DOM](https://open-ui.org/components/popup.research.explainer#shadow-dom)
+the element owning the `popup` attribute is encapsulated in a shadow root to protect it from the 
+surrounding application context. This means that the relationship required for a `togglepopup`, 
+`showpopup`, or `hidepopup` bearing element can no longer be made from that level:
+
+```html 
+<my-tooltip>
+    <template shadowroot=closed>
+      <div popup=hint>This is a tooltip: <slot></slot></div>
+    </template>
+    Tooltip text here!
+  </my-tooltip>
+```
+
+This could be addressed by reflecting the `popup` element to the host like so:
+
+```html 
+<button togglepopup=foo>Toggle the pop-up</button>
+<my-tooltip id="foo">
+    <template shadowroot=closed reflects="popup">
+        <div popup=hint reflect-popup>This is a tooltip: <slot></slot></div>
+    </template>
+    Tooltip text here!
+</my-tooltip>
+```
+
+Here, the declarative relationship between the `[togglepopup]` element and the `[popup]` elements 
+can be made without surfacing the `.showPopUp()` method directly on the `<my-tooltip>` container.
 
 ## Public summary from WCCG
 
