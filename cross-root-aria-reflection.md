@@ -138,8 +138,19 @@ The reflection API might also not resolve attributions from multiple shadow root
 
 ## Thoughts: attribute names are too long
 
-The attributes names such as `shadowrootreflectss*` are very long and some consideration for shorter names by removing the `shadowroot` prefix can be discussed as long the discussion is sync'ed with the stakeholders of the respective Declarative Shadow DOM proposal. This can be further shortened by taking the `reflects` collection as a DOM token list on a single attribue.
+The attributes names such as `shadowrootreflectss*` are very long and some consideration for shorter names by removing the `shadowroot` prefix can be discussed as long the discussion is sync'ed with the stakeholders of the respective Declarative Shadow DOM proposal. This can be further shortened by taking the `reflects-attributes` collection as a DOM token list on a single attribue.
 
+This could also be paired with a source element attribute that could surface the concepts that an single element in the shadow root reflects as a group. That way in the following example `reflect-attributes="role aria-checked"` could be leveraged instead of both `reflectrole` and `reflect-aria-checked`:
+
+```html
+<div role="radiogroup">
+  <x-radio>
+    <template shadowroot="open" reflects-attributes="role aria-checked">
+      <input type="radio" reflect-attributes="role aria-checked" />
+    </template>
+  </x-radio>
+</div>
+```
 
 ## Public summary from WCCG
 
