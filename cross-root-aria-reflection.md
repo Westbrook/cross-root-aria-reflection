@@ -197,7 +197,7 @@ application.
 
 When moving that DOM management responsibility to the individual custom elements
 themselves, the responsibility of the consuming developer begins to diminish, but the ID based
-relationships begin to change or become impossible. To suppor this, we've assumed the presence of
+relationships begin to change or become impossible. To support this, we've assumed the presence of
 the ARIA Attribute Delegation API in following code examples:
 
 ```html
