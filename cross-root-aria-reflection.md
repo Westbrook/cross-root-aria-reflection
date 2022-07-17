@@ -561,6 +561,65 @@ The attributes names such as `shadowrootreflectss*` are very long and some consi
   </div>
   ```
 
+## Non-"aria" attributes for consideration
+
+### datalist
+
+Leveraging the `datalist` attribute on an encapsulated `<input>` element requires that support for this feature is built into the same DOM tree. Support for reflection of this attribute would free this feature to be leveraged more widely:
+
+```html
+<label for="ice-cream-choice">Choose a flavor:</label>
+<d-input list="ice-cream-flavors" id="ice-cream-choice">
+  <template shadowroot="open" delegates="list label">
+    <input auto-list auto-label name="ice-cream-choice" />
+  </template>
+</d-input>
+
+<d-datalist id="ice-cream-flavors">
+  <template shadowroot="open" reflects="list">
+    <datalist reflect-list>
+      <option value="Chocolate">
+      <option value="Coconut">
+      <option value="Mint">
+      <option value="Strawberry">
+      <option value="Vanilla">
+    </datalist>
+  </template>
+</d-datalist>
+```
+
+### OpenUICG Popup API
+
+The OpenUICG is developing an API to support content that popsup over a page. In thier example of 
+[using the new attributes in shadow DOM](https://open-ui.org/components/popup.research.explainer#shadow-dom)
+the element owning the `popup` attribute is encapsulated in a shadow root to protect it from the 
+surrounding application context. This means that the relationship required for a `togglepopup`, 
+`showpopup`, or `hidepopup` bearing element can no longer be made from that level:
+
+```html 
+<my-tooltip>
+    <template shadowroot=closed>
+      <div popup=hint>This is a tooltip: <slot></slot></div>
+    </template>
+    Tooltip text here!
+  </my-tooltip>
+```
+
+This could be addressed by reflecting the `popup` element to the host like so:
+
+```html 
+<button togglepopup=foo>Toggle the pop-up</button>
+<my-tooltip id="foo">
+    <template shadowroot=closed reflects="popup">
+        <div popup=hint reflect-popup>This is a tooltip: <slot></slot></div>
+    </template>
+    Tooltip text here!
+</my-tooltip>
+```
+
+Here, the declarative relationship between the `[togglepopup]` element and the `[popup]` elements 
+can be made without surfacing the `.showPopUp()` method directly on the `<my-tooltip>` container.
+
 ## Public summary from WCCG
 
 https://w3c.github.io/webcomponents-cg/#cross-root-aria
