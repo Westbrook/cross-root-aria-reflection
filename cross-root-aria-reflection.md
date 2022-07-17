@@ -140,7 +140,34 @@ The reflection API might also not resolve attributions from multiple shadow root
 
 The attributes names such as `shadowrootreflectss*` are very long and some consideration for shorter names by removing the `shadowroot` prefix can be discussed as long the discussion is sync'ed with the stakeholders of the respective Declarative Shadow DOM proposal. This can be further shortened by taking the `reflects` collection as a DOM token list on a single attribue.
 
-## OpenUICG Popup API
+## Non-"aria" attributes for consideration
+
+### datalist
+
+Leveraging the `datalist` attribute on an encapsulated `<input>` element requires that support for this feature is built into the same DOM tree. Support for reflection of this attribute would free this feature to be leveraged more widely:
+
+```html
+<label for="ice-cream-choice">Choose a flavor:</label>
+<d-input list="ice-cream-flavors" id="ice-cream-choice">
+  <template shadowroot="open" delegates="list label">
+    <input auto-list auto-label name="ice-cream-choice" />
+  </template>
+</d-input>
+
+<d-datalist id="ice-cream-flavors">
+  <template shadowroot="open" reflects="list">
+    <datalist reflect-list>
+      <option value="Chocolate">
+      <option value="Coconut">
+      <option value="Mint">
+      <option value="Strawberry">
+      <option value="Vanilla">
+    </datalist>
+  </template>
+</d-datalist>
+```
+
+### OpenUICG Popup API
 
 The OpenUICG is developing an API to support content that popsup over a page. In thier example of 
 [using the new attributes in shadow DOM](https://open-ui.org/components/popup.research.explainer#shadow-dom)
