@@ -524,38 +524,48 @@ do inside of a shadow boundary you run into some problems:
 
 ```html 
 <z-button-group role="radiogroup">
-    <z-button>
+    <z-button role="radio">
         #shadow-root
-            <button role="radio"><slot></slot></button>
+            <button><slot></slot></button>
         Option 1
     </z-button>
-    <z-button>
+    <z-button role="radio">
         #shadow-root
-            <button role="radio"><slot></slot></button>
+            <button><slot></slot></button>
         Option 2
     </z-button>
 </z-button-group>
 ```
 
-Here the `role="radio"` elements do not share a DOM tree with the `role="radiogroup"` elements which 
-breaks the contract requried to build the correct accessibility tree and pass it on to screen 
-readers. Here is another useful place for us to reflect aria attribtues from the shadow DOM into 
+Here the `role="radio"` elements share a DOM tree with the `role="radiogroup"` elements to fulfill
+the contract requried to build the correct accessibility tree and pass it on to screen readers.
+However, the `<button>` elements internal to the `<z-button>` custom elements also take a place in
+the accessibility tree confusing the pattern. Often custom element developers will either need to 
+pass the `role` attribute synthetically, which means the "radio" elements is no longer in the same
+DOM tree and the "radiogroup" element, or forgo the native `<button>` element and the benefits of 
+leveraging it directly, like native `tabindex` management, etc. Here is another useful place for 
+us to instead do a combination of delegating and reflecting aria attribtues from the shadow DOM into 
 the parent DOM tree:
 
 ```html 
 <z-button-group role="radiogroup">
-    <z-button>
-        #shadow-root delegates="focus" reflects="role"
-            <button role="radio" reflect-role><slot></slot></button>
+    <z-button role="radio">
+        #shadow-root delegates="focus role" reflects="role"
+            <button auto-role reflect-role><slot></slot></button>
         Option 1
     </z-button>
-    <z-button>
-        #shadow-root delegates="focus" reflects="role"
-            <button role="radio" reflect-role><slot></slot></button>
+    <z-button role="radio">
+        #shadow-root delegates="focus role" reflects="role"
+            <button auto-role reflect-role><slot></slot></button>
         Option 2
     </z-button>
 </z-button-group>
 ```
+
+In this way, while somewhat convoluted, the `<z-button>` elements will appear as a "radio" element 
+in the DOM tree of the `<z-button-group>` element, fulfilling the accessibility tree contract, while the
+`<button>` will be the actual element that responsibility allow for native surfacing of other
+accessible semantics, behaviors, etc.
 
 * * *
 
