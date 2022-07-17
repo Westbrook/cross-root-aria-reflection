@@ -120,6 +120,21 @@ Or even further by accepting a token list on `reflects` or a similarly shaped at
 
 # Appendix
 
+## Attribute Reflection and Aria Reflection proximity
+
+The [Aria Reflection API](https://wicg.github.io/aom/aria-reflection-explainer.html) has already made a name for itself in the Aria community for the new capabilities that it unlocks. There is a possibility that an ARIA Attribute Reflection API would be confusing when places next to it. With that in mind, possible alternative may include:
+
+- ARIA Attribute Export API
+  - This would update `reflects="..."` to `exports="..."` and `reflect-*` to `export-*`, etc.
+- ARIA Attribute Hoisting API
+  - This would update `reflects="..."` to `hoists="..."` and `reflect-*` to `hoist-*`, etc.
+- ARIA Attribute Surfacing API
+  - This would update `reflects="..."` to `surfaces="..."` and `reflect-*` to `surface-*`, etc.
+- ARIA Attribute Maping API
+  - Possibly becomes a parent API naming to include both this and the [delegation API](https://github.com/leobalter/cross-root-aria-delegation)
+  - This doesn't give a specific direction for attribute naming, but might be worth concidering at large.
+  - Is it _just_ an "Attribute" Mapping API, despecializing it for ARIA...
+
 ## No silver bullet
 
 Not all cross-shadow use cases are covered. Cases like radio groups, tab groups, or combobox might require complexity that is not available yet at this current cross-root delegation API. Though custom versions of this might be possible where they weren't before, like building a custom radio group with the `<input>` inside of a shadow root:
@@ -140,17 +155,17 @@ The reflection API might also not resolve attributions from multiple shadow root
 
 The attributes names such as `shadowrootreflectss*` are very long and some consideration for shorter names by removing the `shadowroot` prefix can be discussed as long the discussion is sync'ed with the stakeholders of the respective Declarative Shadow DOM proposal. This can be further shortened by taking the `reflects-attributes` collection as a DOM token list on a single attribue.
 
-This could also be paired with a source element attribute that could surface the concepts that an single element in the shadow root reflects as a group. That way in the following example `reflect-attributes="role aria-checked"` could be leveraged instead of both `reflectrole` and `reflect-aria-checked`:
-
-```html
-<div role="radiogroup">
-  <x-radio>
-    <template shadowroot="open" reflects-attributes="role aria-checked">
-      <input type="radio" reflect-attributes="role aria-checked" />
-    </template>
-  </x-radio>
-</div>
-```
+- Can the various spec bodies come into agreement that using `-` in the attribute names will make them easier to spell/use. `reflect-*` instead of `reflect*` and `reflect-aria-autocomplete` instead of `reflectariaautocomplete`, etc.?
+- Could this be paired with a source element attribute that could surface the concepts that an single element in the shadow root reflects as a group. That way in the following example `reflect-attributes="role aria-checked"` could be leveraged instead of both `reflectrole` and `reflect-aria-checked`:
+  ```html
+  <div role="radiogroup">
+    <x-radio>
+      <template shadowroot="open" reflects-attributes="role aria-checked">
+        <input type="radio" reflect-attributes="role aria-checked" />
+      </template>
+    </x-radio>
+  </div>
+  ```
 
 ## Public summary from WCCG
 
