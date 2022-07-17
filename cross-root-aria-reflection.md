@@ -273,8 +273,8 @@ benefits the refactor of the pattern from raw DOM to custom elements.
             aria-expanded="true"
             aria-controls="cb1-listbox"
         >
-            #shadow-root reflects="role"
-                <button reflect-role></button>
+            #shadow-root delegates="aria-expanded aria-controls aria-label"
+                <button auto-aria-expanded auto-aria-controls auto-aria-label></button>
         </x-button>
     </x-input-group>
     <x-listbox
