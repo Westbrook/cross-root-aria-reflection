@@ -73,6 +73,8 @@ Conforming user agents MUST implement the following IDL interface.
 
 <pre class="idl">
   interface mixin ReflectARIAMixin {
+    attribute DOMString? reflectRole;
+    attribute DOMString? reflectAriaActiveDescendantElement;
     attribute DOMString? reflectAriaAtomic;
     attribute DOMString? reflectAriaAutoComplete;
     attribute DOMString? reflectAriaBusy;
@@ -81,21 +83,28 @@ Conforming user agents MUST implement the following IDL interface.
     attribute DOMString? reflectAriaColIndex;
     attribute DOMString? reflectAriaColIndexText;
     attribute DOMString? reflectAriaColSpan;
+    attribute DOMString? reflectAriaControlsElements;
     attribute DOMString? reflectAriaCurrent;
+    attribute DOMString? reflectAriaDescribedByElements;
     attribute DOMString? reflectAriaDescription;
+    attribute DOMString? reflectAriaDetailsElements;
     attribute DOMString? reflectAriaDisabled;
+    attribute DOMString? reflectAriaErrorMessageElement;
     attribute DOMString? reflectAriaExpanded;
+    attribute DOMString? reflectAriaFlowToElements;
     attribute DOMString? reflectAriaHasPopup;
     attribute DOMString? reflectAriaHidden;
     attribute DOMString? reflectAriaInvalid;
     attribute DOMString? reflectAriaKeyShortcuts;
     attribute DOMString? reflectAriaLabel;
+    attribute DOMString? reflectAriaLabelledByElements;
     attribute DOMString? reflectAriaLevel;
     attribute DOMString? reflectAriaLive;
     attribute DOMString? reflectAriaModal;
     attribute DOMString? reflectAriaMultiLine;
     attribute DOMString? reflectAriaMultiSelectable;
     attribute DOMString? reflectAriaOrientation;
+    attribute DOMString? reflectAriaOwnsElements;
     attribute DOMString? reflectAriaPlaceholder;
     attribute DOMString? reflectAriaPosInSet;
     attribute DOMString? reflectAriaPressed;
@@ -137,32 +146,41 @@ The following table provides a correspondence between IDL attribute names and co
 
 <table>
   <tr><th>IDL Attribute</th><th>Reflected ReflectARIA Content Attribute</th></tr>
+  <tr><td><dfn>reflectRole</dfn></td><td><pref>reflectrole</pref></td></tr>
+  <tr><td><dfn>reflectAriaActiveDescendantElement</dfn></td><td><pref>reflectariaactivedescendantelement</pref></td></tr>
   <tr><td><dfn>reflectAriaAtomic</dfn></td><td><pref>reflectariaatomic</pref></td></tr>
   <tr><td><dfn>reflectAriaAutoComplete</dfn></td><td><pref>reflectariaautocomplete</pref></td></tr>
-  <tr><td><dfn>reflectAriaBusy</dfn></td><td><sref>reflectariabusy</sref></td></tr>
-  <tr><td><dfn>reflectAriaChecked</dfn></td><td><sref>reflectariachecked</sref></td></tr>
+  <tr><td><dfn>reflectAriaBusy</dfn></td><td><pref>reflectariabusy</pref></td></tr>
+  <tr><td><dfn>reflectAriaChecked</dfn></td><td><pref>reflectariachecked</pref></td></tr>
   <tr><td><dfn>reflectAriaColCount</dfn></td><td><pref>reflectariacolcount</pref></td></tr>
   <tr><td><dfn>reflectAriaColIndex</dfn></td><td><pref>reflectariacolindex</pref></td></tr>
   <tr><td><dfn>reflectAriaColIndexText</dfn></td><td><pref>reflectariacolindextext</pref></td></tr>
   <tr><td><dfn>reflectAriaColSpan</dfn></td><td><pref>reflectariacolspan</pref></td></tr>
-  <tr><td><dfn>reflectAriaCurrent</dfn></td><td><sref>reflectariacurrent</sref></td></tr>
+  <tr><td><dfn>reflectAriaControlsElements</dfn></td><td><pref>reflectariacontrolselements</pref></td></tr>
+  <tr><td><dfn>reflectAriaCurrent</dfn></td><td><pref>reflectariacurrent</pref></td></tr>
+  <tr><td><dfn>reflectAriaDescribedByElements</dfn></td><td><pref>reflectariadescribedbyelements</pref></td></tr>
   <tr><td><dfn>reflectAriaDescription</dfn></td><td><pref>reflectariadescription</pref></td></tr>
-  <tr><td><dfn>reflectAriaDisabled</dfn></td><td><sref>reflectariadisabled</sref></td></tr>
-  <tr><td><dfn>reflectAriaExpanded</dfn></td><td><sref>reflectariaexpanded</sref></td></tr>
+  <tr><td><dfn>reflectAriaDetailsElements</dfn></td><td><pref>reflectariadetailselements</pref></td></tr>
+  <tr><td><dfn>reflectAriaDisabled</dfn></td><td><pref>reflectariadisabled</pref></td></tr>
+  <tr><td><dfn>reflectAriaErrorMessageElement</dfn></td><td><pref>reflectariaerrormessageelement</pref></td></tr>
+  <tr><td><dfn>reflectAriaExpanded</dfn></td><td><pref>reflectariaexpanded</pref></td></tr>
+  <tr><td><dfn>reflectAriaFlowToElements</dfn></td><td><pref>reflectariaflowtoelements</pref></td></tr>
   <tr><td><dfn>reflectAriaHasPopup</dfn></td><td><pref>reflectariahaspopup</pref></td></tr>
-  <tr><td><dfn>reflectAriaHidden</dfn></td><td><sref>reflectariahidden</sref></td></tr>
-  <tr><td><dfn>reflectAriaInvalid</dfn></td><td><sref>reflectariainvalid</sref></td></tr>
+  <tr><td><dfn>reflectAriaHidden</dfn></td><td><pref>reflectariahidden</pref></td></tr>
+  <tr><td><dfn>reflectAriaInvalid</dfn></td><td><pref>reflectariainvalid</pref></td></tr>
   <tr><td><dfn>reflectAriaKeyShortcuts</dfn></td><td><pref>reflectariakeyshortcuts</pref></td></tr>
   <tr><td><dfn>reflectAriaLabel</dfn></td><td><pref>reflectarialabel</pref></td></tr>
+  <tr><td><dfn>reflectAriaLabelledByElements</dfn></td><td><pref>reflectarialabelledbyelements</pref></td></tr>
   <tr><td><dfn>reflectAriaLevel</dfn></td><td><pref>reflectarialevel</pref></td></tr>
   <tr><td><dfn>reflectAriaLive</dfn></td><td><pref>reflectarialive</pref></td></tr>
   <tr><td><dfn>reflectAriaModal</dfn></td><td><pref>reflectariamodal</pref></td></tr>
   <tr><td><dfn>reflectAriaMultiLine</dfn></td><td><pref>reflectariamultiline</pref></td></tr>
   <tr><td><dfn>reflectAriaMultiSelectable</dfn></td><td><pref>reflectariamultiselectable</pref></td></tr>
   <tr><td><dfn>reflectAriaOrientation</dfn></td><td><pref>reflectariaorientation</pref></td></tr>
+  <tr><td><dfn>reflectAriaOwnsElements</dfn></td><td><pref>reflectariaownselements</pref></td></tr>
   <tr><td><dfn>reflectAriaPlaceholder</dfn></td><td><pref>reflectariaplaceholder</pref></td></tr>
   <tr><td><dfn>reflectAriaPosInSet</dfn></td><td><pref>reflectariaposinset</pref></td></tr>
-  <tr><td><dfn>reflectAriaPressed</dfn></td><td><sref>reflectariapressed</sref></td></tr>
+  <tr><td><dfn>reflectAriaPressed</dfn></td><td><pref>reflectariapressed</pref></td></tr>
   <tr><td><dfn>reflectAriaReadOnly</dfn></td><td><pref>reflectariareadonly</pref></td></tr>
   <tr><td><dfn>reflectAriaRequired</dfn></td><td><pref>reflectariarequired</pref></td></tr>
   <tr><td><dfn>reflectAriaRoleDescription</dfn></td><td><pref>reflectariaroledescription</pref></td></tr>
@@ -170,7 +188,7 @@ The following table provides a correspondence between IDL attribute names and co
   <tr><td><dfn>reflectAriaRowIndex</dfn></td><td><pref>reflectariarowindex</pref></td></tr>
   <tr><td><dfn>reflectAriaRowIndexText</dfn></td><td><pref>reflectariarowindextext</pref></td></tr>
   <tr><td><dfn>reflectAriaRowSpan</dfn></td><td><pref>reflectariarowspan</pref></td></tr>
-  <tr><td><dfn>reflectAriaSelected</dfn></td><td><sref>reflectariaselected</sref></td></tr>
+  <tr><td><dfn>reflectAriaSelected</dfn></td><td><pref>reflectariaselected</pref></td></tr>
   <tr><td><dfn>reflectAriaSetSize</dfn></td><td><pref>reflectariasetsize</pref></td></tr>
   <tr><td><dfn>reflectAriaSort</dfn></td><td><pref>reflectariasort</pref></td></tr>
   <tr><td><dfn>reflectAriaValueMax</dfn></td><td><pref>reflectariavaluemax</pref></td></tr>
@@ -200,6 +218,8 @@ Note: In practice, this means that, e.g., the `reflectAriaAtomic` IDL on `Elemen
 
 <pre class="idl">
   interface mixin ShadowRootMixin {
+    attribute DOMString? reflectsRole;
+    attribute DOMString? reflectsAriaActiveDescendantElement;
     attribute DOMString? reflectsAriaAtomic;
     attribute DOMString? reflectsAriaAutoComplete;
     attribute DOMString? reflectsAriaBusy;
@@ -208,21 +228,28 @@ Note: In practice, this means that, e.g., the `reflectAriaAtomic` IDL on `Elemen
     attribute DOMString? reflectsAriaColIndex;
     attribute DOMString? reflectsAriaColIndexText;
     attribute DOMString? reflectsAriaColSpan;
+    attribute DOMString? reflectsAriaControlsElements;
     attribute DOMString? reflectsAriaCurrent;
+    attribute DOMString? reflectsAriaDescribedByElements;
     attribute DOMString? reflectsAriaDescription;
+    attribute DOMString? reflectsAriaDetailsElements;
     attribute DOMString? reflectsAriaDisabled;
+    attribute DOMString? reflectsAriaErrorMessageElement;
     attribute DOMString? reflectsAriaExpanded;
+    attribute DOMString? reflectsAriaFlowToElements;
     attribute DOMString? reflectsAriaHasPopup;
     attribute DOMString? reflectsAriaHidden;
     attribute DOMString? reflectsAriaInvalid;
     attribute DOMString? reflectsAriaKeyShortcuts;
     attribute DOMString? reflectsAriaLabel;
+    attribute DOMString? reflectsAriaLabelledByElements;
     attribute DOMString? reflectsAriaLevel;
     attribute DOMString? reflectsAriaLive;
     attribute DOMString? reflectsAriaModal;
     attribute DOMString? reflectsAriaMultiLine;
     attribute DOMString? reflectsAriaMultiSelectable;
     attribute DOMString? reflectsAriaOrientation;
+    attribute DOMString? reflectsAriaOwnsElements;
     attribute DOMString? reflectsAriaPlaceholder;
     attribute DOMString? reflectsAriaPosInSet;
     attribute DOMString? reflectsAriaPressed;
@@ -264,32 +291,41 @@ The following table provides a correspondence between IDL attribute names and co
 
 <table>
   <tr><th>IDL Attribute</th><th>Reflected ShadowRoot Content Attribute</th></tr>
+  <tr><td><dfn>reflectsRole</dfn></td><td><pref>reflectsrole</pref></td></tr>
+  <tr><td><dfn>reflectsAriaActiveDescendantElement</dfn></td><td><pref>reflectsariaactivedescendantelement</pref></td></tr>
   <tr><td><dfn>reflectsAriaAtomic</dfn></td><td><pref>reflectsariaatomic</pref></td></tr>
   <tr><td><dfn>reflectsAriaAutoComplete</dfn></td><td><pref>reflectsariaautocomplete</pref></td></tr>
-  <tr><td><dfn>reflectsAriaBusy</dfn></td><td><sref>reflectsariabusy</sref></td></tr>
-  <tr><td><dfn>reflectsAriaChecked</dfn></td><td><sref>reflectsariachecked</sref></td></tr>
+  <tr><td><dfn>reflectsAriaBusy</dfn></td><td><pref>reflectsariabusy</pref></td></tr>
+  <tr><td><dfn>reflectsAriaChecked</dfn></td><td><pref>reflectsariachecked</pref></td></tr>
   <tr><td><dfn>reflectsAriaColCount</dfn></td><td><pref>reflectsariacolcount</pref></td></tr>
   <tr><td><dfn>reflectsAriaColIndex</dfn></td><td><pref>reflectsariacolindex</pref></td></tr>
   <tr><td><dfn>reflectsAriaColIndexText</dfn></td><td><pref>reflectsariacolindextext</pref></td></tr>
   <tr><td><dfn>reflectsAriaColSpan</dfn></td><td><pref>reflectsariacolspan</pref></td></tr>
-  <tr><td><dfn>reflectsAriaCurrent</dfn></td><td><sref>reflectsariacurrent</sref></td></tr>
+  <tr><td><dfn>reflectsAriaControlsElements</dfn></td><td><pref>reflectsariacontrolselements</pref></td></tr>
+  <tr><td><dfn>reflectsAriaCurrent</dfn></td><td><pref>reflectsariacurrent</pref></td></tr>
+  <tr><td><dfn>reflectsAriaDescribedByElements</dfn></td><td><pref>reflectsariadescribedbyelements</pref></td></tr>
   <tr><td><dfn>reflectsAriaDescription</dfn></td><td><pref>reflectsariadescription</pref></td></tr>
-  <tr><td><dfn>reflectsAriaDisabled</dfn></td><td><sref>reflectsariadisabled</sref></td></tr>
-  <tr><td><dfn>reflectsAriaExpanded</dfn></td><td><sref>reflectsariaexpanded</sref></td></tr>
+  <tr><td><dfn>reflectsAriaDetailsElements</dfn></td><td><pref>reflectsariadetailselements</pref></td></tr>
+  <tr><td><dfn>reflectsAriaDisabled</dfn></td><td><pref>reflectsariadisabled</pref></td></tr>
+  <tr><td><dfn>reflectsAriaErrorMessageElement</dfn></td><td><pref>reflectsariaerrormessageelement</pref></td></tr>
+  <tr><td><dfn>reflectsAriaExpanded</dfn></td><td><pref>reflectsariaexpanded</pref></td></tr>
+  <tr><td><dfn>reflectsAriaFlowToElements</dfn></td><td><pref>reflectsariaflowtoelements</pref></td></tr>
   <tr><td><dfn>reflectsAriaHasPopup</dfn></td><td><pref>reflectsariahaspopup</pref></td></tr>
-  <tr><td><dfn>reflectsAriaHidden</dfn></td><td><sref>reflectsariahidden</sref></td></tr>
-  <tr><td><dfn>reflectsAriaInvalid</dfn></td><td><sref>reflectsariainvalid</sref></td></tr>
+  <tr><td><dfn>reflectsAriaHidden</dfn></td><td><pref>reflectsariahidden</pref></td></tr>
+  <tr><td><dfn>reflectsAriaInvalid</dfn></td><td><pref>reflectsariainvalid</pref></td></tr>
   <tr><td><dfn>reflectsAriaKeyShortcuts</dfn></td><td><pref>reflectsariakeyshortcuts</pref></td></tr>
   <tr><td><dfn>reflectsAriaLabel</dfn></td><td><pref>reflectsarialabel</pref></td></tr>
+  <tr><td><dfn>reflectsAriaLabelledByElements</dfn></td><td><pref>reflectsarialabelledbyelements</pref></td></tr>
   <tr><td><dfn>reflectsAriaLevel</dfn></td><td><pref>reflectsarialevel</pref></td></tr>
   <tr><td><dfn>reflectsAriaLive</dfn></td><td><pref>reflectsarialive</pref></td></tr>
   <tr><td><dfn>reflectsAriaModal</dfn></td><td><pref>reflectsariamodal</pref></td></tr>
   <tr><td><dfn>reflectsAriaMultiLine</dfn></td><td><pref>reflectsariamultiline</pref></td></tr>
   <tr><td><dfn>reflectsAriaMultiSelectable</dfn></td><td><pref>reflectsariamultiselectable</pref></td></tr>
   <tr><td><dfn>reflectsAriaOrientation</dfn></td><td><pref>reflectsariaorientation</pref></td></tr>
+  <tr><td><dfn>reflectsAriaOwnsElements</dfn></td><td><pref>reflectsariaownselements</pref></td></tr>
   <tr><td><dfn>reflectsAriaPlaceholder</dfn></td><td><pref>reflectsariaplaceholder</pref></td></tr>
   <tr><td><dfn>reflectsAriaPosInSet</dfn></td><td><pref>reflectsariaposinset</pref></td></tr>
-  <tr><td><dfn>reflectsAriaPressed</dfn></td><td><sref>reflectsariapressed</sref></td></tr>
+  <tr><td><dfn>reflectsAriaPressed</dfn></td><td><pref>reflectsariapressed</pref></td></tr>
   <tr><td><dfn>reflectsAriaReadOnly</dfn></td><td><pref>reflectsariareadonly</pref></td></tr>
   <tr><td><dfn>reflectsAriaRequired</dfn></td><td><pref>reflectsariarequired</pref></td></tr>
   <tr><td><dfn>reflectsAriaRoleDescription</dfn></td><td><pref>reflectsariaroledescription</pref></td></tr>
@@ -297,7 +333,7 @@ The following table provides a correspondence between IDL attribute names and co
   <tr><td><dfn>reflectsAriaRowIndex</dfn></td><td><pref>reflectsariarowindex</pref></td></tr>
   <tr><td><dfn>reflectsAriaRowIndexText</dfn></td><td><pref>reflectsariarowindextext</pref></td></tr>
   <tr><td><dfn>reflectsAriaRowSpan</dfn></td><td><pref>reflectsariarowspan</pref></td></tr>
-  <tr><td><dfn>reflectsAriaSelected</dfn></td><td><sref>reflectsariaselected</sref></td></tr>
+  <tr><td><dfn>reflectsAriaSelected</dfn></td><td><pref>reflectsariaselected</pref></td></tr>
   <tr><td><dfn>reflectsAriaSetSize</dfn></td><td><pref>reflectsariasetsize</pref></td></tr>
   <tr><td><dfn>reflectsAriaSort</dfn></td><td><pref>reflectsariasort</pref></td></tr>
   <tr><td><dfn>reflectsAriaValueMax</dfn></td><td><pref>reflectsariavaluemax</pref></td></tr>
@@ -326,7 +362,8 @@ Note: In practice, this means that, e.g., the `reflectsAriaAtomic` IDL on `Shado
 <pre class="idl">
   [Exposed=Window]
   dictionary ShadowRootExtInit: ShadowRootInit {
-    boolean reflectsAriaDescribedBy = false;
+    boolean reflectsRole = false;
+    boolean reflectsAriaActiveDescendantElement = false;
     boolean reflectsAriaAtomic = false;
     boolean reflectsAriaAutoComplete = false;
     boolean reflectsAriaBusy = false;
@@ -335,21 +372,28 @@ Note: In practice, this means that, e.g., the `reflectsAriaAtomic` IDL on `Shado
     boolean reflectsAriaColIndex = false;
     boolean reflectsAriaColIndexText = false;
     boolean reflectsAriaColSpan = false;
+    boolean reflectsAriaControlsElements = false;
     boolean reflectsAriaCurrent = false;
+    boolean reflectsAriaDescribedByElements = false;
     boolean reflectsAriaDescription = false;
+    boolean reflectsAriaDetailsElements = false;
     boolean reflectsAriaDisabled = false;
+    boolean reflectsAriaErrorMessageElement = false;
     boolean reflectsAriaExpanded = false;
+    boolean reflectsAriaFlowToElements = false;
     boolean reflectsAriaHasPopup = false;
     boolean reflectsAriaHidden = false;
     boolean reflectsAriaInvalid = false;
     boolean reflectsAriaKeyShortcuts = false;
     boolean reflectsAriaLabel = false;
+    boolean reflectsAriaLabelledByElements = false;
     boolean reflectsAriaLevel = false;
     boolean reflectsAriaLive = false;
     boolean reflectsAriaModal = false;
     boolean reflectsAriaMultiLine = false;
     boolean reflectsAriaMultiSelectable = false;
     boolean reflectsAriaOrientation = false;
+    boolean reflectsAriaOwnsElements = false;
     boolean reflectsAriaPlaceholder = false;
     boolean reflectsAriaPosInSet = false;
     boolean reflectsAriaPressed = false;
@@ -397,47 +441,55 @@ User agents MUST update the attachShadow method signature in the <code>Element</
     <tr><th>Attribute</th><th>reflects</th></tr>
   </thead>
   <tbody>
-    <tr><td>reflects ariaDescribedBy</td><td>reflectsAriaDescribedBy</td></tr>
-    <tr><td>reflects ariaAtomic</td><td>reflectsAriaAtomic</td></tr>
-    <tr><td>reflects ariaAutoComplete</td><td>reflectsAriaAutoComplete</td></tr>
-    <tr><td>reflects ariaBusy</td><td>reflectsAriaBusy</td></tr>
-    <tr><td>reflects ariaChecked</td><td>reflectsAriaChecked</td></tr>
-    <tr><td>reflects ariaColCount</td><td>reflectsAriaColCount</td></tr>
-    <tr><td>reflects ariaColIndex</td><td>reflectsAriaColIndex</td></tr>
-    <tr><td>reflects ariaColIndexText</td><td>reflectsAriaColIndexText</td></tr>
-    <tr><td>reflects ariaColSpan</td><td>reflectsAriaColSpan</td></tr>
-    <tr><td>reflects ariaCurrent</td><td>reflectsAriaCurrent</td></tr>
-    <tr><td>reflects ariaDescription</td><td>reflectsAriaDescription</td></tr>
-    <tr><td>reflects ariaDisabled</td><td>reflectsAriaDisabled</td></tr>
-    <tr><td>reflects ariaExpanded</td><td>reflectsAriaExpanded</td></tr>
-    <tr><td>reflects ariaHasPopup</td><td>reflectsAriaHasPopup</td></tr>
-    <tr><td>reflects ariaHidden</td><td>reflectsAriaHidden</td></tr>
-    <tr><td>reflects ariaInvalid</td><td>reflectsAriaInvalid</td></tr>
-    <tr><td>reflects ariaKeyShortcuts</td><td>reflectsAriaKeyShortcuts</td></tr>
-    <tr><td>reflects ariaLabel</td><td>reflectsAriaLabel</td></tr>
-    <tr><td>reflects ariaLevel</td><td>reflectsAriaLevel</td></tr>
-    <tr><td>reflects ariaLive</td><td>reflectsAriaLive</td></tr>
-    <tr><td>reflects ariaModal</td><td>reflectsAriaModal</td></tr>
-    <tr><td>reflects ariaMultiLine</td><td>reflectsAriaMultiLine</td></tr>
-    <tr><td>reflects ariaMultiSelectable</td><td>reflectsAriaMultiSelectable</td></tr>
-    <tr><td>reflects ariaOrientation</td><td>reflectsAriaOrientation</td></tr>
-    <tr><td>reflects ariaPlaceholder</td><td>reflectsAriaPlaceholder</td></tr>
-    <tr><td>reflects ariaPosInSet</td><td>reflectsAriaPosInSet</td></tr>
-    <tr><td>reflects ariaPressed</td><td>reflectsAriaPressed</td></tr>
-    <tr><td>reflects ariaReadOnly</td><td>reflectsAriaReadOnly</td></tr>
-    <tr><td>reflects ariaRequired</td><td>reflectsAriaRequired</td></tr>
-    <tr><td>reflects ariaRoleDescription</td><td>reflectsAriaRoleDescription</td></tr>
-    <tr><td>reflects ariaRowCount</td><td>reflectsAriaRowCount</td></tr>
-    <tr><td>reflects ariaRowIndex</td><td>reflectsAriaRowIndex</td></tr>
-    <tr><td>reflects ariaRowIndexText</td><td>reflectsAriaRowIndexText</td></tr>
-    <tr><td>reflects ariaRowSpan</td><td>reflectsAriaRowSpan</td></tr>
-    <tr><td>reflects ariaSelected</td><td>reflectsAriaSelected</td></tr>
-    <tr><td>reflects ariaSetSize</td><td>reflectsAriaSetSize</td></tr>
-    <tr><td>reflects ariaSort</td><td>reflectsAriaSort</td></tr>
-    <tr><td>reflects ariaValueMax</td><td>reflectsAriaValueMax</td></tr>
-    <tr><td>reflects ariaValueMin</td><td>reflectsAriaValueMin</td></tr>
-    <tr><td>reflects ariaValueNow</td><td>reflectsAriaValueNow</td></tr>
-    <tr><td>reflects ariaValueText</td><td>reflectsAriaValueText</td></tr>
+    <tr><td>reflects ariaRole</td><td>reflectsRole</td></tr>
+    <tr><td>reflects ariaAriaActiveDescendantElement</td><td>reflectsAriaActiveDescendantElement</td></tr>
+    <tr><td>reflects ariaAriaAtomic</td><td>reflectsAriaAtomic</td></tr>
+    <tr><td>reflects ariaAriaAutoComplete</td><td>reflectsAriaAutoComplete</td></tr>
+    <tr><td>reflects ariaAriaBusy</td><td>reflectsAriaBusy</td></tr>
+    <tr><td>reflects ariaAriaChecked</td><td>reflectsAriaChecked</td></tr>
+    <tr><td>reflects ariaAriaColCount</td><td>reflectsAriaColCount</td></tr>
+    <tr><td>reflects ariaAriaColIndex</td><td>reflectsAriaColIndex</td></tr>
+    <tr><td>reflects ariaAriaColIndexText</td><td>reflectsAriaColIndexText</td></tr>
+    <tr><td>reflects ariaAriaColSpan</td><td>reflectsAriaColSpan</td></tr>
+    <tr><td>reflects ariaAriaControlsElements</td><td>reflectsAriaControlsElements</td></tr>
+    <tr><td>reflects ariaAriaCurrent</td><td>reflectsAriaCurrent</td></tr>
+    <tr><td>reflects ariaAriaDescribedByElements</td><td>reflectsAriaDescribedByElements</td></tr>
+    <tr><td>reflects ariaAriaDescription</td><td>reflectsAriaDescription</td></tr>
+    <tr><td>reflects ariaAriaDetailsElements</td><td>reflectsAriaDetailsElements</td></tr>
+    <tr><td>reflects ariaAriaDisabled</td><td>reflectsAriaDisabled</td></tr>
+    <tr><td>reflects ariaAriaErrorMessageElement</td><td>reflectsAriaErrorMessageElement</td></tr>
+    <tr><td>reflects ariaAriaExpanded</td><td>reflectsAriaExpanded</td></tr>
+    <tr><td>reflects ariaAriaFlowToElements</td><td>reflectsAriaFlowToElements</td></tr>
+    <tr><td>reflects ariaAriaHasPopup</td><td>reflectsAriaHasPopup</td></tr>
+    <tr><td>reflects ariaAriaHidden</td><td>reflectsAriaHidden</td></tr>
+    <tr><td>reflects ariaAriaInvalid</td><td>reflectsAriaInvalid</td></tr>
+    <tr><td>reflects ariaAriaKeyShortcuts</td><td>reflectsAriaKeyShortcuts</td></tr>
+    <tr><td>reflects ariaAriaLabel</td><td>reflectsAriaLabel</td></tr>
+    <tr><td>reflects ariaAriaLabelledByElements</td><td>reflectsAriaLabelledByElements</td></tr>
+    <tr><td>reflects ariaAriaLevel</td><td>reflectsAriaLevel</td></tr>
+    <tr><td>reflects ariaAriaLive</td><td>reflectsAriaLive</td></tr>
+    <tr><td>reflects ariaAriaModal</td><td>reflectsAriaModal</td></tr>
+    <tr><td>reflects ariaAriaMultiLine</td><td>reflectsAriaMultiLine</td></tr>
+    <tr><td>reflects ariaAriaMultiSelectable</td><td>reflectsAriaMultiSelectable</td></tr>
+    <tr><td>reflects ariaAriaOrientation</td><td>reflectsAriaOrientation</td></tr>
+    <tr><td>reflects ariaAriaOwnsElements</td><td>reflectsAriaOwnsElements</td></tr>
+    <tr><td>reflects ariaAriaPlaceholder</td><td>reflectsAriaPlaceholder</td></tr>
+    <tr><td>reflects ariaAriaPosInSet</td><td>reflectsAriaPosInSet</td></tr>
+    <tr><td>reflects ariaAriaPressed</td><td>reflectsAriaPressed</td></tr>
+    <tr><td>reflects ariaAriaReadOnly</td><td>reflectsAriaReadOnly</td></tr>
+    <tr><td>reflects ariaAriaRequired</td><td>reflectsAriaRequired</td></tr>
+    <tr><td>reflects ariaAriaRoleDescription</td><td>reflectsAriaRoleDescription</td></tr>
+    <tr><td>reflects ariaAriaRowCount</td><td>reflectsAriaRowCount</td></tr>
+    <tr><td>reflects ariaAriaRowIndex</td><td>reflectsAriaRowIndex</td></tr>
+    <tr><td>reflects ariaAriaRowIndexText</td><td>reflectsAriaRowIndexText</td></tr>
+    <tr><td>reflects ariaAriaRowSpan</td><td>reflectsAriaRowSpan</td></tr>
+    <tr><td>reflects ariaAriaSelected</td><td>reflectsAriaSelected</td></tr>
+    <tr><td>reflects ariaAriaSetSize</td><td>reflectsAriaSetSize</td></tr>
+    <tr><td>reflects ariaAriaSort</td><td>reflectsAriaSort</td></tr>
+    <tr><td>reflects ariaAriaValueMax</td><td>reflectsAriaValueMax</td></tr>
+    <tr><td>reflects ariaAriaValueMin</td><td>reflectsAriaValueMin</td></tr>
+    <tr><td>reflects ariaAriaValueNow</td><td>reflectsAriaValueNow</td></tr>
+    <tr><td>reflects ariaAriaValueText</td><td>reflectsAriaValueText</td></tr>
   </tbody>
 </table>
 
